@@ -2,6 +2,10 @@ var Botkit = require('botkit')
 
 var token = process.env.SLACK_TOKEN
 
+var wit = require('./src/botkit-middleware-witai')({
+  token: process.env.wit,
+});
+
 var controller = Botkit.slackbot({
   // reconnect to Slack RTM when connection goes bad
   retry: Infinity,
@@ -26,6 +30,13 @@ if (token) {
   console.log('Starting in Beep Boop multi-team mode')
   require('beepboop-botkit').start(controller, { debug: true })
 }
+
+controller.middleware.receive.use(wit.receive);
+
+/* note this uses example middlewares defined above */
+controller.hears(['hello'], 'direct_message,direct_mention,mention', wit.hears, function(bot, message) {
+  bot.reply(message, 'Hello from wit.ai!');
+})
 
 controller.on('bot_channel_join', function (bot, message) {
   bot.reply(message, "I'm here!")
