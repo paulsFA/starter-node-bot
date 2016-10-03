@@ -37,7 +37,7 @@ controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
 
 controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
   bot.reply(message, 'Hello.')
-  bot.reply(message, 'It\'s nice to talk to you directly fastangle person.')
+  bot.reply(message, 'It\'s nice to talk to you directly fastangle human.')
 })
 
 controller.hears('.*', ['mention'], function (bot, message) {
